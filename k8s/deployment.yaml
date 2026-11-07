@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: openstack-demo
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: openstack-demo
+  template:
+    metadata:
+      labels:
+        app: openstack-demo
+    spec:
+      containers:
+        - name: api
+          image: ghcr.io/REPLACE_OWNER/openstack-k8s-demo:latest
+          ports:
+            - containerPort: 3000
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 250m
+              memory: 128Mi
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: openstack-demo
+spec:
+  selector:
+    app: openstack-demo
+  ports:
+    - port: 80
+      targetPort: 3000
+  type: ClusterIP
