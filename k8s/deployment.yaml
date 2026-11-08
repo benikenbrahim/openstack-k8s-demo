@@ -1,5 +1,6 @@
+
 apiVersion: apps/v1
-kind: Service
+kind: Deployment
 metadata:
   name: openstack-demo
 spec:
@@ -34,9 +35,10 @@ kind: Service
 metadata:
   name: openstack-demo
 spec:
+  type: NodePort
   selector:
     app: openstack-demo
   ports:
     - port: 80
       targetPort: 3000
-  type: ClusterIP
+      nodePort: 31429
