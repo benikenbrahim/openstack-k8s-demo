@@ -14,7 +14,7 @@ const handler = (req, res) => {
     return res.end(JSON.stringify({
       message: "Hello from Kubernetes on OpenStack!",
       hostname: os.hostname(),
-      version: "1.0.0"
+      version: "1.1.0"
     }));
   }
 
